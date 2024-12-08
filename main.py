@@ -1,6 +1,6 @@
 import os
 import random
-from tracker import VolumetricTracker
+from tracker import HumanTracker
 
 def main():
     video_folder = "videos/"
@@ -9,8 +9,8 @@ def main():
     random_video = random.choice(video_files)
     random_video_path = os.path.join(video_folder, random_video)
     
-    tracker = VolumetricTracker(random_video_path)
-    tracker.track()
+    tracker = HumanTracker(random_video_path)
+    tracker.process_video()
 
 if __name__ == "__main__":
     main()
