@@ -9,6 +9,7 @@ A Python-based computer vision system that tracks human movements, analyzes moti
 ## Requirements
 - Python 3.10+
 - OpenCV
+- PyTorch
 - YOLO11n
 
 ## Installation
@@ -18,7 +19,7 @@ git clone https://github.com/yourusername/human-motion-volumetrics.git
 ```
 Install the required packages:
 ```bash
-pip install opencv-python ultralytics
+pip install opencv-python ultralytics torch torchvision torchaudio
 ```
 ## Usage
 **Make sure the video_folder variable is configured correctly in the main.py file.**
