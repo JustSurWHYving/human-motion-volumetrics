@@ -1,9 +1,11 @@
 import cv2
+import torch
 from ultralytics import YOLO, solutions
 
 class HumanTracker:
     def __init__(self, video_path):
         self.video_path = video_path
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.CFG = {"model": "models/yolo11n.pt"}
         self.model = YOLO(self.CFG["model"])
         self.frame_count = 0
