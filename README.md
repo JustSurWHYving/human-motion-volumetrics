@@ -22,6 +22,7 @@ pip install opencv-python ultralytics
 ```
 ## Usage
 **Make sure the video_folder variable is configured correctly in the main.py file.**
+
 Run the main script:
 ```bash
 python main.py
