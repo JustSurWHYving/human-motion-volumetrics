@@ -1,6 +1,6 @@
 import os
 import random
-from tracker import HumanTracker
+from trackerof import HumanTracker
 
 def main():
     # Set dataset location
