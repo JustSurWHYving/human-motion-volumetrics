@@ -3,20 +3,21 @@ import torch
 from ultralytics import YOLO, solutions
 
 class HumanTracker:
-    def __init__(self, video_path):
-        self.video_path = video_path
+    def __init__(self):
+        self.video_path = cv2.VideoCapture(0)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.CFG = {"model": "models/yolo11n.pt"}
         self.model = YOLO(self.CFG["model"])
         self.frame_count = 0
         
     def process_video(self):
-        cap = cv2.VideoCapture(0)
+        cap = self.video_path
         w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
         ret, first_frame = cap.read()
         if not ret:
             return
         
+        # Initialize heatmap
         self.heatmap = solutions.Heatmap(
             show=False,
             model= self.CFG["model"],
@@ -25,7 +26,6 @@ class HumanTracker:
             
         while cap.isOpened():
             ret, frame = cap.read()
-            frame = cv2.flip(frame, 1)
             if not ret:
                 break
 

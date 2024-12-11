@@ -1,15 +1,10 @@
 import os
 import random
-from trackerof import HumanTracker
+from tracker_of_live import HumanTracker
 
 def main():
-    # Set dataset location
-    # video_folder = "videos/"
-    # video_files = [f for f in os.listdir(video_folder) if f.endswith(('.mp4', '.avi', '.mov'))]
-
-    # # Russian roullete with the dataset videos
-    # random_video = random.choice(video_files)
-    # random_video_path = os.path.join(video_folder, random_video)
+    # If running on a video, put the video path in the HumanTracker class
+    # video_path = 
     
     tracker = HumanTracker()
     tracker.process_video()
