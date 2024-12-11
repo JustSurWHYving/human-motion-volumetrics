@@ -32,8 +32,8 @@ class HumanTracker:
             frame = cv2.flip(frame, 1)
 
             # Draw vertical line
-            line_x = w // 2  # Line in the middle of the frame
-            cv2.line(frame, (line_x, 0), (line_x, h), (0, 0, 255), 2)
+            # line_x = w // 2  # Line in the middle of the frame
+            # cv2.line(frame, (line_x, 0), (line_x, h), (0, 0, 255), 2)
 
             # Calculate optical flow with noise reduction
             current_frame = cv2.GaussianBlur(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), (5, 5), 0)
@@ -74,10 +74,10 @@ class HumanTracker:
                         cv2.rectangle(final_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
                         # Check if bounding box intersects with vertical line
-                        if x1 <= line_x <= x2:
-                            print("WARNING: Person on the line!")
-                        else:
-                            print("No on the line.")
+                        # if x1 <= line_x <= x2:
+                        #     print("WARNING: Person on the line!")
+                        # else:
+                        #     print("No on the line.")
 
             
             # Display human count
