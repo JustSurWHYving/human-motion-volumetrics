@@ -4,18 +4,18 @@ from ultralytics import YOLO
 import numpy as np
 
 class HumanTracker:
-    def __init__(self, video_path):
+    def __init__(self, video_path = cv2.VideoCapture(0)):
         self.video_path = video_path
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.CFG = {"model": "models/yolo11n.pt"}
         self.model = YOLO(self.CFG["model"])
         self.frame_count = 0
         self.prev_frame = None
-        self.heatmap = np.zeros((int(cv2.VideoCapture(video_path).get(cv2.CAP_PROP_FRAME_HEIGHT)),
-                               int(cv2.VideoCapture(video_path).get(cv2.CAP_PROP_FRAME_WIDTH))), dtype=np.float32)
+        self.heatmap = np.zeros((int(self.video_path.get(cv2.CAP_PROP_FRAME_HEIGHT)),
+                               int(self.video_path.get(cv2.CAP_PROP_FRAME_WIDTH))), dtype=np.float32)
         
     def process_video(self):
-        cap = cv2.VideoCapture(self.video_path)
+        cap = self.video_path
         w, h, fps = (int(cap.get(x)) for x in (cv2.CAP_PROP_FRAME_WIDTH, cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FPS))
         ret, first_frame = cap.read()
         if not ret:
@@ -27,6 +27,7 @@ class HumanTracker:
             ret, frame = cap.read()
             if not ret:
                 break
+            frame = cv2.flip(frame, 1)
 
             # Calculate optical flow with noise reduction
             current_frame = cv2.GaussianBlur(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), (5, 5), 0)
