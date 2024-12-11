@@ -21,21 +21,24 @@ class HumanTracker:
         if not ret:
             return
         
-        self.prev_frame = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)
+        self.prev_frame = cv2.GaussianBlur(cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY), (5, 5), 0)
             
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
                 break
 
-            # Calculate optical flow
-            current_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            # Calculate optical flow with noise reduction
+            current_frame = cv2.GaussianBlur(cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), (5, 5), 0)
             flow = cv2.calcOpticalFlowFarneback(self.prev_frame, current_frame, None, 
-                                              pyr_scale=0.5, levels=3, winsize=15, 
-                                              iterations=3, poly_n=5, poly_sigma=1.2, flags=0)
+                                              pyr_scale=0.5, levels=5, winsize=21, 
+                                              iterations=3, poly_n=7, poly_sigma=1.5, flags=0)
+            
+            # Apply threshold to filter out small movements
+            magnitude = np.sqrt(flow[..., 0] ** 2 + flow[..., 1] ** 2)
+            magnitude[magnitude < 1.0] = 0  # Filter small movements
             
             # Update heatmap based on flow magnitude
-            magnitude = np.sqrt(flow[..., 0] ** 2 + flow[..., 1] ** 2)
             self.heatmap = cv2.add(self.heatmap, magnitude)
             
             # Normalize and colorize heatmap
