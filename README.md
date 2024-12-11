@@ -24,7 +24,7 @@ pip install opencv-python ultralytics torch torchvision torchaudio
 ## Usage
 **Make sure the video_folder variable is configured correctly in the main.py file.**
 
-Run the main script:
+Run the main script (after selecting the file from which to pull the class):
 ```bash
 python main.py
 ```
